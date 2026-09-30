@@ -1,3 +1,5 @@
+from promotions import Promotion
+
 class Product:
     """Represent a product in the store."""
 
@@ -28,10 +30,25 @@ class Product:
         self.price = price
         self.quantity = quantity
         self.active = True
+        self.promotion = None
 
     def get_quantity(self):
         """Return the product quantity."""
         return self.quantity
+
+    def get_promotion(self):
+        """Return the product promotion."""
+
+        return self.promotion
+
+    def set_promotion(self, promotion):
+        """Set the promotion."""
+
+        if promotion is not None and not isinstance(promotion, Promotion):
+            raise TypeError("Promotion must be a Promotion object or None.")
+
+        self.promotion = promotion
+
 
     def is_active(self):
         """Return whether the product is active."""
@@ -61,8 +78,15 @@ class Product:
 
     def show(self):
         """Display the product information."""
-        print(self.name + ", Price: " + str(self.price) +
-              ", Quantity: " + str(self.quantity))
+        output = (
+                self.name + ", Price: " + str(self.price) +
+                ", Quantity: " + str(self.quantity)
+        )
+
+        if self.promotion:
+            output += ", Promotion: " + self.promotion.name
+
+        print(output)
 
     def buy(self, quantity):
         """Buy a quantity of the product."""
@@ -83,6 +107,11 @@ class Product:
                              " items. Please make new order" )
 
         self.set_quantity(self.quantity - quantity)
+
+        # Apply promotion if the product has one
+        if self.promotion:
+            return self.promotion.apply_promotion(self, quantity)
+
         return quantity * self.price
 
 class NonStockedProduct(Product):
@@ -97,8 +126,16 @@ class NonStockedProduct(Product):
 
     def show(self):
         """Display non-stocked product information."""
-        print("Non-stocked product")
-        super().show()
+
+        output = (
+                self.name + ", Price: " + str(self.price) +
+                ", Quantity: unlimited"
+        )
+
+        if self.promotion:
+            output += ", Promotion: " + self.promotion.name
+
+        print(output)
 
     def buy(self, quantity):
         """Buy a nonstocked product."""
@@ -108,6 +145,9 @@ class NonStockedProduct(Product):
 
         if quantity <= 0:
             raise ValueError("Quantity must be greater than zero.")
+
+        if self.promotion:
+            return self.promotion.apply_promotion(self, quantity)
 
         return quantity * self.price
 
@@ -129,5 +169,14 @@ class LimitedProduct(Product):
 
     def show(self):
         """Display limited product information."""
-        print("Limited product with max buy quantity: " + str(self.maximum))
-        super().show()
+
+        output = (
+                self.name + ", Price: " + str(self.price) +
+                ", Quantity: " + str(self.quantity) +
+                ", Max order quantity: " + str(self.maximum)
+        )
+
+        if self.promotion:
+            output += ", Promotion: " + self.promotion.name
+
+        print(output)

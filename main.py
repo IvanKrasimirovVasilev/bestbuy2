@@ -1,12 +1,28 @@
 import products
 import store
+import promotions
 
 
+# Create list of products
 product_list = [
     products.Product("MacBook Air M2", price=1450, quantity=100),
     products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-    products.Product("Google Pixel 7", price=500, quantity=250)
+    products.Product("Google Pixel 7", price=500, quantity=250),
+    products.NonStockedProduct("Windows License", price=125),
+    products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
 ]
+
+# Create promotion catalog
+second_half_price = promotions.SecondHalfPrice("Second Half price!")
+third_one_free = promotions.ThirdOneFree("Third One Free!")
+thirty_percent = promotions.PercentDiscount("30% off!", percent=30)
+
+# Add promotions to products
+product_list[0].set_promotion(second_half_price)
+product_list[1].set_promotion(third_one_free)
+product_list[3].set_promotion(thirty_percent)
+
+product_list[0].show()
 
 best_buy = store.Store(product_list)
 
@@ -56,27 +72,15 @@ def make_order(store_obj):
             print("Quantity must be greater than 0.")
             continue
 
-        already_ordered = 0
-
-        for product, ordered_quantity in shopping_list:
-            if product == selected_product:
-                already_ordered += ordered_quantity
-
-        available_quantity = (
-            selected_product.get_quantity() - already_ordered
-        )
-
-        if quantity > available_quantity:
-            print(
-                "Not enough " + selected_product.name +
-                ". You can order max " + str(available_quantity) + "."
-            )
-            continue
-
         shopping_list.append((selected_product, quantity))
 
-    total_price = store_obj.order(shopping_list)
-    print("Order cost: " + str(total_price))
+    try:
+        total_price = store_obj.order(shopping_list)
+        print("Order cost: " + str(total_price))
+
+    except (TypeError, ValueError) as error:
+        print("Order failed: " + str(error))
+        return [], 0
 
     return shopping_list, total_price
 
@@ -112,16 +116,17 @@ def start(store_obj):
                 print("\nYour order:")
 
                 for product, quantity in order_history:
+
+                    if product.get_promotion():
+                        price = product.get_promotion().apply_promotion(product, quantity)
+                    else:
+                        price = quantity * product.price
+
                     print(
                         str(quantity) + " x " + product.name +
-                        " - " + str(quantity * product.price) + " euro"
+                        " - " + str(price) + " euro"
                     )
-
-                print(
-                    "Total price: " +
-                    str(total_order_price) +
-                    " euro"
-                )
+                print("\nTotal price: " + str(total_order_price) + " euro")
 
             print("Thank you and goodbye!")
             break
