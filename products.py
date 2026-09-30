@@ -84,3 +84,50 @@ class Product:
 
         self.set_quantity(self.quantity - quantity)
         return quantity * self.price
+
+class NonStockedProduct(Product):
+    """Represent a non-stock product in the store."""
+    def __init__(self, name, price):
+        """Create a non-stock product."""
+        super().__init__(name, price, 0)
+
+    def set_quantity(self, quantity):
+        """Set the product quantity."""
+        self.quantity = 0
+
+    def show(self):
+        """Display non-stocked product information."""
+        print("Non-stocked product")
+        super().show()
+
+    def buy(self, quantity):
+        """Buy a nonstocked product."""
+
+        if not isinstance(quantity, int):
+            raise TypeError("Quantity must be an integer.")
+
+        if quantity <= 0:
+            raise ValueError("Quantity must be greater than zero.")
+
+        return quantity * self.price
+
+
+class LimitedProduct(Product):
+    """Represent a limited product in the store."""
+    def __init__(self, name, price, quantity, maximum):
+        """Create a limited product."""
+        super().__init__(name, price, quantity)
+        self.maximum = maximum
+
+    def buy(self, quantity):
+        """Buy a limited quantity of the product."""
+
+        if quantity > self.maximum:
+            raise ValueError("Cannot buy more than the maximum quantity.")
+
+        return super().buy(quantity)
+
+    def show(self):
+        """Display limited product information."""
+        print("Limited product with max buy quantity: " + str(self.maximum))
+        super().show()
