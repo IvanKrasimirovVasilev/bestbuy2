@@ -1,4 +1,3 @@
-import products
 from products import Product
 
 
@@ -22,7 +21,7 @@ class Store:
     def add_product(self, product):
         """Add a product to the store."""
 
-        if not isinstance(product, products.Product):
+        if not isinstance(product, Product):
             raise TypeError("Wrong product type. All products must be product object.")
 
         self.products.append(product)
@@ -30,7 +29,7 @@ class Store:
     def remove_product(self, product):
         """Remove a product from the store."""
 
-        if not isinstance(product, products.Product):
+        if not isinstance(product, Product):
             raise TypeError("Wrong product type. All products must be product object.")
 
         if product not in self.products:
@@ -42,7 +41,7 @@ class Store:
         """Return the total quantity of all products."""
         total = 0
         for product in self.products:
-            total += products.quantity
+            total += product.quantity
 
         return total
 

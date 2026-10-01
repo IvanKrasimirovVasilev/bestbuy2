@@ -71,3 +71,10 @@ def test_non_stocked_product_str():
     product = NonStockedProduct("Windows License", 125)
 
     assert str(product) == "Windows License, Price: 125, Quantity: unlimited"
+
+
+def test_product_greater_than():
+    mac = Product("MacBook Air M2", 1450, 100)
+    bose = Product("Bose QuietComfort Earbuds", 250, 500)
+
+    assert mac > bose

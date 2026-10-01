@@ -31,8 +31,7 @@ def make_order(store_obj):
     active_products = store_obj.get_all_products()
 
     for index, product in enumerate(active_products):
-        print(str(index + 1) + ". ", end="")
-        product.show()
+        print(str(index + 1) + ". " + str(product))
 
     while True:
         try:
@@ -98,7 +97,7 @@ def start(store_obj):
 
         if choice == "1":
             for product in store_obj.get_all_products():
-                product.show()
+                print(product)
 
         elif choice == "2":
             print(store_obj.get_total_quantity())

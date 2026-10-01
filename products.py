@@ -65,9 +65,22 @@ class Product:
         if value == 0:
             self.deactivate()
 
-    def get_quantity(self):
-        """Return the product quantity."""
-        return self.quantity
+    @property
+    def promotion(self):
+        """Return the product promotion."""
+        return self._promotion
+
+    @promotion.setter
+    def promotion(self, value):
+        """Set the product promotion."""
+        if value is not None and not isinstance(value, Promotion):
+            raise TypeError("Promotion must be a Promotion object or None.")
+
+        self._promotion = value
+
+    def __gt__(self, other):
+        """Compare two products."""
+        return self.price > other.price
 
     def is_active(self):
         """Return whether the product is active."""
@@ -81,22 +94,8 @@ class Product:
         """Deactivate the product."""
         self.active = False
 
-    def set_quantity(self, quantity):
-        """Set the product quantity."""
-
-        if not isinstance(quantity, (int)):
-            raise TypeError("Wrong product quantity. Must be an integer.")
-
-        if quantity < 0:
-            raise ValueError("Product quantity cannot be negative.")
-
-
-        self.quantity = quantity
-        if quantity == 0:
-            self.deactivate()
-
     def __str__(self):
-        """Display the product information as sting."""
+        """Return the product information as sting."""
         output = (
                 self.name + ", Price: " + str(self.price) +
                 ", Quantity: " + str(self.quantity)
@@ -149,21 +148,8 @@ class NonStockedProduct(Product):
         """Keep the product quantity always at zero."""
         self._quantity = 0
 
-    @property
-    def promotion(self):
-        """Return the product promotion."""
-        return self._promotion
-
-    @promotion.setter
-    def promotion(self, value):
-        """Set the product promotion."""
-        if value is not None and not isinstance(value, Promotion):
-            raise TypeError("Promotion must be a Promotion object or None.")
-
-        self._promotion = value
-
     def __str__(self):
-        """Display non-stocked product information as string."""
+        """Return non-stocked product information as string."""
 
         output = (
                 self.name + ", Price: " + str(self.price) +
@@ -205,8 +191,8 @@ class LimitedProduct(Product):
 
         return super().buy(quantity)
 
-    def show(self):
-        """Display limited product information."""
+    def __str__(self):
+        """Limited product information as string."""
 
         output = (
                 self.name + ", Price: " + str(self.price) +
@@ -217,4 +203,4 @@ class LimitedProduct(Product):
         if self.promotion:
             output += ", Promotion: " + self.promotion.name
 
-        print(output)
+        return output
