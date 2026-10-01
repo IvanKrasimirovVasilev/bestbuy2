@@ -1,3 +1,4 @@
+"""Product classes for the Best Buy store."""
 from promotions import Promotion
 
 class Product:
@@ -125,7 +126,7 @@ class Product:
 
         if quantity > self.quantity:
             raise ValueError("Not enough " + self.name +
-                             "in store. We have only " + str(self.quantity) +
+                             " in store. We have only " + str(self.quantity) +
                              " items. Please make new order" )
 
         self.quantity -= quantity
@@ -148,7 +149,7 @@ class NonStockedProduct(Product):
         return 0
 
     @quantity.setter
-    def quantity(self, value):
+    def quantity(self, _value):
         """Keep the product quantity always at zero."""
         self._quantity = 0
 
@@ -179,7 +180,6 @@ class NonStockedProduct(Product):
 
         return quantity * self.price
 
-
 class LimitedProduct(Product):
     """Represent a limited product in the store."""
     def __init__(self, name, price, quantity, maximum):
@@ -191,7 +191,10 @@ class LimitedProduct(Product):
         """Buy a limited quantity of the product."""
 
         if quantity > self.maximum:
-            raise ValueError("Cannot buy more than the maximum quantity.")
+            raise ValueError(
+                "Cannot buy " + self.name +
+                ". Maximum order quantity is " + str(self.maximum) + "."
+            )
 
         return super().buy(quantity)
 

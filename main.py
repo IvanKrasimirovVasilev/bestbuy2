@@ -1,7 +1,7 @@
+"""Main application for the Best Buy store."""
 import products
 import store
 import promotions
-
 
 # Create list of products
 product_list = [

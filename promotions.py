@@ -1,3 +1,4 @@
+"""Promotion classes for product discounts."""
 from abc import ABC, abstractmethod
 
 class Promotion(ABC):
@@ -17,7 +18,6 @@ class Promotion(ABC):
     def apply_promotion(self, product,  quantity):
         pass
 
-
 class PercentDiscount(Promotion):
     """Represent a percent discount promotion."""
 
@@ -33,20 +33,18 @@ class PercentDiscount(Promotion):
         self.percent = percent
 
     def apply_promotion(self, product, quantity):
+        """Represent a percent discount promotion."""
         total_price = product.price * quantity
         discount = total_price * self.percent / 100
         result = total_price - discount
 
         return result
 
-
 class SecondHalfPrice(Promotion):
     """Represent a second item half price promotion."""
 
-    def __init__(self, name):
-        super().__init__(name)
-
     def apply_promotion(self, product, quantity):
+        """Represent a second item half price promotion."""
         half_price_items = quantity // 2
         total_price = product.price * quantity
         discount = half_price_items * product.price / 2
@@ -57,10 +55,8 @@ class SecondHalfPrice(Promotion):
 class ThirdOneFree(Promotion):
     """Represent a third product free promotion."""
 
-    def __init__(self, name):
-        super().__init__(name)
-
     def apply_promotion(self, product, quantity):
+        """Represent a third product free promotion."""
         free_items = quantity // 3
         total_price = product.price * quantity
         discount = free_items * product.price

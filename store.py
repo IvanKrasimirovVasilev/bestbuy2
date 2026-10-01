@@ -1,5 +1,5 @@
+"""Store class for managing products and orders."""
 from products import Product
-
 
 class Store:
     """Represent a store with products."""
