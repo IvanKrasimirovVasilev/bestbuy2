@@ -78,3 +78,9 @@ def test_product_greater_than():
     bose = Product("Bose QuietComfort Earbuds", 250, 500)
 
     assert mac > bose
+
+def test_product_lower_than():
+    mac = Product("MacBook Air M2", 150, 100)
+    bose = Product("Bose QuietComfort Earbuds", 250, 500)
+
+    assert mac < bose

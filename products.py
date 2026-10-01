@@ -82,6 +82,10 @@ class Product:
         """Compare two products."""
         return self.price > other.price
 
+    def __lt__(self, other):
+        """Compare two products."""
+        return self.price < other.price
+
     def is_active(self):
         """Return whether the product is active."""
         return self.active
