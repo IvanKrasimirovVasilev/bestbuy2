@@ -32,6 +32,22 @@ class Product:
         self.active = True
         self.promotion = None
 
+    @property
+    def price(self):
+        """Return the product price."""
+        return self._price
+
+    @price.setter
+    def price(self, value):
+        """Set the product price."""
+        if not isinstance(value, (int, float)):
+            raise TypeError("Product price must be a number.")
+
+        if value < 0:
+            raise ValueError("Product price cannot be negative.")
+
+        self._price = value
+
     def get_quantity(self):
         """Return the product quantity."""
         return self.quantity
@@ -48,7 +64,6 @@ class Product:
             raise TypeError("Promotion must be a Promotion object or None.")
 
         self.promotion = promotion
-
 
     def is_active(self):
         """Return whether the product is active."""

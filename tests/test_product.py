@@ -41,3 +41,16 @@ def test_buy_too_many_products():
 
     with pytest.raises(ValueError):
         product.buy(14)
+
+def test_set_negative_price():
+    product = Product("MacBook Air M2", 1450, 100)
+
+    with pytest.raises(ValueError):
+        product.price = -100
+
+def test_set_new_price():
+    product = Product("MacBook Air M2", 1450, 100)
+
+    product.price = 1600
+
+    assert product.price == 1600
