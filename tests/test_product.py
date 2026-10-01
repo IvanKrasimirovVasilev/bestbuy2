@@ -66,3 +66,8 @@ def test_product_str():
     product = Product("MacBook Air M2", 1450, 100)
 
     assert str(product) == "MacBook Air M2, Price: 1450, Quantity: 100"
+
+def test_non_stocked_product_str():
+    product = NonStockedProduct("Windows License", 125)
+
+    assert str(product) == "Windows License, Price: 125, Quantity: unlimited"

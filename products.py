@@ -162,8 +162,8 @@ class NonStockedProduct(Product):
 
         self._promotion = value
 
-    def show(self):
-        """Display non-stocked product information."""
+    def __str__(self):
+        """Display non-stocked product information as string."""
 
         output = (
                 self.name + ", Price: " + str(self.price) +
@@ -173,7 +173,7 @@ class NonStockedProduct(Product):
         if self.promotion:
             output += ", Promotion: " + self.promotion.name
 
-        print(output)
+        return output
 
     def buy(self, quantity):
         """Buy a nonstocked product."""
