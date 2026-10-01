@@ -18,6 +18,10 @@ class Store:
 
         self.products = products
 
+    def __contains__(self, product):
+        """Check if a product is in the store."""
+        return product in self.products
+
     def add_product(self, product):
         """Add a product to the store."""
 

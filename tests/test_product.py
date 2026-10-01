@@ -2,6 +2,8 @@ from unittest import result
 
 import pytest
 from products import Product, NonStockedProduct
+from store import Store
+
 
 def test_create_product():
     product = Product("Ivan test product", 1450, 100)
@@ -84,3 +86,14 @@ def test_product_lower_than():
     bose = Product("Bose QuietComfort Earbuds", 250, 500)
 
     assert mac < bose
+
+def test_product_in_store():
+    mac = Product("MacBook Air M2", 150, 100)
+    bose = Product("Bose QuietComfort Earbuds", 250, 500)
+    bosen = Product("Bosen QuietComfort Earbuds", 250, 500)
+
+    best_buy = Store([mac, bose])
+
+    assert mac in best_buy
+    assert bose in best_buy
+    assert bosen not in best_buy
