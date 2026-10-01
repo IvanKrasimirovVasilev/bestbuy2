@@ -22,6 +22,10 @@ class Store:
         """Check if a product is in the store."""
         return product in self.products
 
+    def __add__(self, other):
+        """combine two stores"""
+        return Store(self.products + other.products)
+
     def add_product(self, product):
         """Add a product to the store."""
 

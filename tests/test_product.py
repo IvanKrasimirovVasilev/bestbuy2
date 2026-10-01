@@ -97,3 +97,16 @@ def test_product_in_store():
     assert mac in best_buy
     assert bose in best_buy
     assert bosen not in best_buy
+
+def test_add_two_stores():
+    mac = Product("MacBook Air M2", 1450, 100)
+    bose = Product("Bose QuietComfort Earbuds", 250, 500)
+    ivanproduct = Product("Ivan test product", 1450, 100)
+
+    store1 = Store([mac])
+    store2 = Store([bose, ivanproduct])
+
+    new_store = store1 + store2
+
+    assert mac in new_store
+    assert bose in new_store
