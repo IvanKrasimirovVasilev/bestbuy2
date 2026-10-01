@@ -48,6 +48,24 @@ class Product:
 
         self._price = value
 
+    @property
+    def quantity(self):
+        """Return the product quantity."""
+        return self._quantity
+
+    @quantity.setter
+    def quantity(self, value):
+        """Set the product quantity."""
+        if not isinstance(value, int):
+            raise TypeError("Product quantity must be an integer.")
+        if value < 0:
+            raise ValueError("Product quantity cannot be negative.")
+        self._quantity = value
+
+        if value == 0:
+            self.deactivate()
+
+
     def get_quantity(self):
         """Return the product quantity."""
         return self.quantity
@@ -121,7 +139,7 @@ class Product:
                              "in store. We have only " + str(self.quantity) +
                              " items. Please make new order" )
 
-        self.set_quantity(self.quantity - quantity)
+        self.quantity -= quantity
 
         # Apply promotion if the product has one
         if self.promotion:
@@ -135,9 +153,15 @@ class NonStockedProduct(Product):
         """Create a non-stock product."""
         super().__init__(name, price, 0)
 
-    def set_quantity(self, quantity):
-        """Set the product quantity."""
-        self.quantity = 0
+    @property
+    def quantity(self):
+        """Return the product quantity."""
+        return 0
+
+    @quantity.setter
+    def quantity(self, value):
+        """Keep the product quantity always at zero."""
+        self._quantity = 0
 
     def show(self):
         """Display non-stocked product information."""

@@ -42,7 +42,7 @@ class Store:
         """Return the total quantity of all products."""
         total = 0
         for product in self.products:
-            total += product.get_quantity()
+            total += products.quantity
 
         return total
 
