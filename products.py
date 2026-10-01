@@ -65,7 +65,6 @@ class Product:
         if value == 0:
             self.deactivate()
 
-
     def get_quantity(self):
         """Return the product quantity."""
         return self.quantity
@@ -96,8 +95,8 @@ class Product:
         if quantity == 0:
             self.deactivate()
 
-    def show(self):
-        """Display the product information."""
+    def __str__(self):
+        """Display the product information as sting."""
         output = (
                 self.name + ", Price: " + str(self.price) +
                 ", Quantity: " + str(self.quantity)
@@ -106,7 +105,7 @@ class Product:
         if self.promotion:
             output += ", Promotion: " + self.promotion.name
 
-        print(output)
+        return output
 
     def buy(self, quantity):
         """Buy a quantity of the product."""

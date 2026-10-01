@@ -61,3 +61,8 @@ def test_non_stocked_product_quantity_stays_zero():
     product.quantity = 500
 
     assert product.quantity == 0
+
+def test_product_str():
+    product = Product("MacBook Air M2", 1450, 100)
+
+    assert str(product) == "MacBook Air M2, Price: 1450, Quantity: 100"
