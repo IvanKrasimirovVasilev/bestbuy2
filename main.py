@@ -18,11 +18,9 @@ third_one_free = promotions.ThirdOneFree("Third One Free!")
 thirty_percent = promotions.PercentDiscount("30% off!", percent=30)
 
 # Add promotions to products
-product_list[0].set_promotion(second_half_price)
-product_list[1].set_promotion(third_one_free)
-product_list[3].set_promotion(thirty_percent)
-
-product_list[0].show()
+product_list[0].promotion = second_half_price
+product_list[1].promotion = third_one_free
+product_list[3].promotion = thirty_percent
 
 best_buy = store.Store(product_list)
 
@@ -117,8 +115,8 @@ def start(store_obj):
 
                 for product, quantity in order_history:
 
-                    if product.get_promotion():
-                        price = product.get_promotion().apply_promotion(product, quantity)
+                    if product.promotion:
+                        price = product.promotion.apply_promotion(product, quantity)
                     else:
                         price = quantity * product.price
 

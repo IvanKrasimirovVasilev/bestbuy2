@@ -70,19 +70,6 @@ class Product:
         """Return the product quantity."""
         return self.quantity
 
-    def get_promotion(self):
-        """Return the product promotion."""
-
-        return self.promotion
-
-    def set_promotion(self, promotion):
-        """Set the promotion."""
-
-        if promotion is not None and not isinstance(promotion, Promotion):
-            raise TypeError("Promotion must be a Promotion object or None.")
-
-        self.promotion = promotion
-
     def is_active(self):
         """Return whether the product is active."""
         return self.active
@@ -162,6 +149,19 @@ class NonStockedProduct(Product):
     def quantity(self, value):
         """Keep the product quantity always at zero."""
         self._quantity = 0
+
+    @property
+    def promotion(self):
+        """Return the product promotion."""
+        return self._promotion
+
+    @promotion.setter
+    def promotion(self, value):
+        """Set the product promotion."""
+        if value is not None and not isinstance(value, Promotion):
+            raise TypeError("Promotion must be a Promotion object or None.")
+
+        self._promotion = value
 
     def show(self):
         """Display non-stocked product information."""
